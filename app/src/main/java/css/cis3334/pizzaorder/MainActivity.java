@@ -38,9 +38,7 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         chkbxCheese = (CheckBox) findViewById(R.id.checkBoxCheese);
         chkbxDelivery = (CheckBox) findViewById(R.id.checkBoxDeluvery);
 
-        rbSmall.append("Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.SMALL));
-        rbMedium.append("Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.MEDIUM));
-        rbLarge.append("Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.LARGE));
+
 
         rbSmall.setText("Small - Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.SMALL));
         rbMedium.setText("Medium - Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.MEDIUM));
@@ -69,11 +67,13 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
 
         // ****** For the Practice Activity, students need to call to OrderPizza here
         // ****** For the Assignment, students will modify the order to fit the type of pizza the user selects using the UI widgets
+        orderDescription = pizzaOrderSystem.OrderPizza("Pepperoni", "Large", false);
 
         //display a pop up message for a long period of time
         Toast.makeText(getApplicationContext(), "You have ordered a "+orderDescription , Toast.LENGTH_LONG).show();
         // add this pizza to the textview the lists the pizzas
         txtPizzasOrdered.append(orderDescription+"\n");
+        txtTotal.setText("Total Due: " + pizzaOrderSystem.getTotalBill().toString());
 
     }
 }
