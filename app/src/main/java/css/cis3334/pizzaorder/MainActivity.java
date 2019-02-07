@@ -20,11 +20,14 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
     TextView txtStatus;
     TextView txtPizzasOrdered;
     Spinner spinnerToppings;
+    PizzaOrderInterface pizzaOrderSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pizzaOrderSystem = new PizzaOrder(this);
 
         // Set up our radio buttons
         rbSmall = (RadioButton) findViewById(R.id.radioButtonSmall);
@@ -35,12 +38,21 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         chkbxCheese = (CheckBox) findViewById(R.id.checkBoxCheese);
         chkbxDelivery = (CheckBox) findViewById(R.id.checkBoxDeluvery);
 
+        rbSmall.append("Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.SMALL));
+        rbMedium.append("Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.MEDIUM));
+        rbLarge.append("Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.LARGE));
+
+        rbSmall.setText("Small - Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.SMALL));
+        rbMedium.setText("Medium - Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.MEDIUM));
+        rbLarge.setText("Large - Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.LARGE));
+
         // Set up the TextViews
         txtTotal = (TextView) findViewById(R.id.textViewTotal);
         txtStatus = (TextView) findViewById(R.id.textViewStatus);
         txtPizzasOrdered = (TextView) findViewById(R.id.textViewPizzasOrdered);
         // Set up the Spinner
         spinnerToppings = (Spinner) findViewById(R.id.spinnerToppings);
+
 
     }
 
