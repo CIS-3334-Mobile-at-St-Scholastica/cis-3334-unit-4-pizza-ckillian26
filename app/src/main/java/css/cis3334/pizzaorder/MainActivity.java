@@ -1,10 +1,12 @@
 package css.cis3334.pizzaorder;
 
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +24,17 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
     Spinner spinnerToppings;
     PizzaOrderInterface pizzaOrderSystem;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         pizzaOrderSystem = new PizzaOrder(this);
+
+
+
 
         // Set up our radio buttons
         rbSmall = (RadioButton) findViewById(R.id.radioButtonSmall);
@@ -48,8 +55,10 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         txtTotal = (TextView) findViewById(R.id.textViewTotal);
         txtStatus = (TextView) findViewById(R.id.textViewStatus);
         txtPizzasOrdered = (TextView) findViewById(R.id.textViewPizzasOrdered);
+
         // Set up the Spinner
         spinnerToppings = (Spinner) findViewById(R.id.spinnerToppings);
+
 
 
     }
@@ -63,11 +72,40 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
     public void onClickOrder(View view) {
         // ****** For the Assignment, students need to add code here to get information from the UI widgets...
 
+        //Checks is the delivery check box is checked.
+        Boolean delivery = false;
+        if(chkbxDelivery.isChecked()){
+            delivery = true;
+        }
+        pizzaOrderSystem.setDelivery(delivery);
+
+        // Checks which radio button for the pizza size is selected.
+       String pizzaSize;
+        if(rbLarge.isChecked()){
+            pizzaSize = "Large";
+        }  else if (rbMedium.isChecked()) {
+            pizzaSize = "Medium";
+        }else {
+            pizzaSize = "Small";
+        }
+
+        // Checks if the extra cheese check box is checked.
+        Boolean extraCheese = false;
+        if(chkbxCheese.isChecked()){
+            extraCheese = true;
+        }
+
+        // Sets the selected topping from the spinner.
+        String selectedTopping = spinnerToppings.getSelectedItem().toString();
+
         String orderDescription = "No orders yet";
+
 
         // ****** For the Practice Activity, students need to call to OrderPizza here
         // ****** For the Assignment, students will modify the order to fit the type of pizza the user selects using the UI widgets
-        orderDescription = pizzaOrderSystem.OrderPizza("Pepperoni", "Large", false);
+
+
+        orderDescription = pizzaOrderSystem.OrderPizza(selectedTopping, pizzaSize, extraCheese);
 
         //display a pop up message for a long period of time
         Toast.makeText(getApplicationContext(), "You have ordered a "+orderDescription , Toast.LENGTH_LONG).show();
